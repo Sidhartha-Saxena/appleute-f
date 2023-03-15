@@ -14,6 +14,7 @@ export default function Login() {
       "password":password,
       "name":username
     };
+    localStorage.clear();
     fetch("http://localhost:5000/api/v1/auth/register", {
       method: "POST",
       headers: { "Content-type": "application/json;charset=UTF-8" },

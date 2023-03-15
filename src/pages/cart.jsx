@@ -9,19 +9,21 @@ export default function Cart() {
       method: "GET",
       headers: {
         Authorization:
-          `Bearer ${localStorage.getItem('token')}`,
+          `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDEwODRmNDc0NGVlNjE5ZTk1MzkxOTAiLCJuYW1lIjoicGV0ZXIiLCJpYXQiOjE2Nzg4NDg2MjQsImV4cCI6MTY4MTQ0MDYyNH0.F1J2mLT_zDAseO5epIw_A9PmC0-rJqJhPV49DqFiByc`,
       },
     })
       .then((response) => response.json())
-      .then((data) => console.log(data));
+      .then((data) => setProducts(data.cartItems));
+      console.log(products)
   }, []);
-  // useEffect(() => {
-  //   products?.forEach((el) => {
-  //     fetch(`http://localhost:5000/api/v1/prod/${el.productId}`)
-  //       .then((response) => response.json())
-  //       .then((data) => setProd((arr) => [...arr, data]));
-  //   });
-  // }, [products]);
+  useEffect(async() => {
+    setProd(await Promise.all(products?.map(async(el) => {
+      await fetch(`http://localhost:5000/api/v1/prod/${el.productId}`)
+        .then((response) => response.json())
+        .then((data) => data);
+    })));
+    console.log(prod)
+  }, [products]);
   return (
     <>
       <section className="bg-light my-5">

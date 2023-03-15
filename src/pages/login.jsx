@@ -10,6 +10,7 @@ export default function Login() {
       "email":email,
       "password":password
     };
+    localStorage.clear();
     fetch("http://localhost:5000/api/v1/auth/login", {
       method: "POST",
       headers: { "Content-type": "application/json;charset=UTF-8" },
